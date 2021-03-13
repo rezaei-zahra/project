@@ -29,12 +29,20 @@ class User extends Authenticatable
         'email',
         'name',
         'password',
-        'verify_code',
-        'verify_at',
+//        'verify_code',
+//        'verify_at',
     ];
 
     protected $hidden = [
-        'password', 'verify_code'
+        'password',
+//        'verify_code'
     ];
+
+    //region relations
+    public function page()
+    {
+        return $this->hasOne(Page::class);
+    }
+    //endregion relations
 
 }
