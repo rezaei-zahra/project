@@ -42,7 +42,7 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
             'hash' => false,
         ],
@@ -112,6 +112,24 @@ return [
     |
     */
 
+
     'password_timeout' => 10800,
+
+    //تنظیمات به دقیقه هست
+    'token_expiration'=> [
+        'token' =>env('EXPIRATION_TOKEN',10),
+        'refresh_token'=>env('EXPIRATION_REFRESH_TOKEN',10),
+    ],
+    'change_mail_cache_expiration'=>env('EXPIRATION_CHANGE_EMAIL_CACHE_',1440),
+    //زمان انقضای کش رجیستر
+    'register_cache_expiration'=> env('EXPIRATION_CACHE_REGISTER',14400), //30 * 24 * 60
+    //فاصله زمانی برای ایجاد کد جدید برای فعال سازی به ساعت
+    'resend_verification_code_time_diff'=>env('RESEND_VERIFICATION_CODE_TIME_DIFF',1),
+
+    // ارسال کد ایمیل رجیستری
+    'url' => env('FRONTEND_URL', 'http://127.0.0.1:8000'),
+    // path to my frontend page with query param queryURL(temporarySignedRoute URL)
+    'email_verify_url' => env('FRONTEND_EMAIL_VERIFY_URL', '/verify-email?queryURL='),
+
 
 ];
