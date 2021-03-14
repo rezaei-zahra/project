@@ -17,7 +17,6 @@ class AuthController extends Controller
     public function login(LoginUserRequest $request)
     {
         try {
-            dd('dddddd');
 //            $field = $request->has('email') ? 'email' : 'phoneNumber';
 //            $value = $request->input($field);
             $credentials = [
@@ -85,5 +84,12 @@ class AuthController extends Controller
             DB::rollBack();
             return response(['message' => $exception->getMessage()], 500);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->
+        token()->delete();
+        return response()->json('شما با موفقیت خارج شدید', 200);
     }
 }
