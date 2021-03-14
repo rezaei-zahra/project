@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Page;
+use App\Models\ListSick;
 use Illuminate\Http\Request;
 
-class PageController extends Controller
+class ListSickController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class PageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Page  $page
+     * @param  \App\Models\ListSick  $listSick
      * @return \Illuminate\Http\Response
      */
-    public function show(Page $page)
+    public function show(ListSick $listSick)
     {
         //
     }
@@ -52,10 +52,10 @@ class PageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Page  $page
+     * @param  \App\Models\ListSick  $listSick
      * @return \Illuminate\Http\Response
      */
-    public function edit(Page $page)
+    public function edit(ListSick $listSick)
     {
         //
     }
@@ -64,10 +64,10 @@ class PageController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Page  $page
+     * @param  \App\Models\ListSick  $listSick
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Page $page)
+    public function update(Request $request, ListSick $listSick)
     {
         //
     }
@@ -75,10 +75,10 @@ class PageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Page  $page
+     * @param  \App\Models\ListSick  $listSick
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Page $page)
+    public function destroy(ListSick $listSick)
     {
         //
     }

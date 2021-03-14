@@ -39,9 +39,33 @@ class User extends Authenticatable
     ];
 
     //region relations
-    public function page()
+    public function comments()
     {
-        return $this->hasOne(Page::class);
+        return $this->hasMany(Comment::class);
+    }
+
+    public function favourites()
+    {
+        return $this->hasManyThrough(
+            User::class,
+            Favourite::class,
+            'user_id1',
+            'id',
+            'id',
+            'user_id2' //
+        );
+    }
+
+    public function listsicks()
+    {
+        return $this->hasManyThrough(
+            User::class,
+            ListSick::class,
+            'user_id1',
+            'id',
+            'id',
+            'user_id2' //
+        );
     }
     //endregion relations
 
