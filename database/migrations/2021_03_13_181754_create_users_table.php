@@ -23,13 +23,13 @@ class CreateUsersTable extends Migration
             $table->enum("type",\App\Models\User::TYPES)->default(\App\Models\User::TYPE_USER);
 //            $table->string('verify_code',6)->nullable();
 //            $table->timestamp('verify_at')->nullable();
-            $table->string('city');
-            $table->string('specialty');//تخصص
-            $table->string('degree');
-            $table->string('phone');
-            $table->string('address');
-            $table->string('workDay');
-            $table->string('hoursWork');
+            $table->string('city')->nullable();
+            $table->string('specialty')->nullable();//تخصص
+            $table->string('degree')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('workDay')->nullable();
+            $table->string('hoursWork')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
