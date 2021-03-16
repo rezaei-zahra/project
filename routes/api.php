@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/search/{name?}/{city?}/{specialty?}', [UserController::class, 'search']);
+Route::get('/listAllDoctor', [UserController::class, 'listAllDoctor']);
+
 
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);

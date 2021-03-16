@@ -47,11 +47,7 @@ class AuthController extends Controller
             if ($email) {
                 $user = User::where('email', $email)->first();
                 if ($user) {
-                    if ($user->verify_at) {
-                        return response(['message' => 'Email or phone number already registered, please enter another one!'], 400);
-                    } else {
-                        return response(['message' => 'The verification code has been sent, please check your email!'], 406);
-                    }
+                    return response(['message' => 'Email or phone number already registered, please enter another one!'], 400);
                 }
             }
 
@@ -60,15 +56,14 @@ class AuthController extends Controller
                 'firstName' => $request->firstName,
                 'lastName' => $request->lastName,
                 'phoneNumber' => $request->phoneNumber,
+                'specialty' => $request->specialty,
+                'number' => $request->number,
                 'role' => $request->role,
                 'email' => $request->email,
-//                'verify_code' => $code,
                 'password' => Hash::make($request->password),
             ]);
 
-            if ($user->role == 'پزشک'){
-                $page = new Page(['user_id'=>$user->id]);
-            }
+
             $token = $user->createToken('Token' . $user->id)->accessToken;
             //------------------------------ sending email ----------------------------
 //            $email = $request->email;
@@ -79,7 +74,7 @@ class AuthController extends Controller
 //            Mail::to($email)->send(new PasswordMail($details));
             //-------------------------------------------------------------------------
             DB::commit();
-            return response()->json(['user' => $user, 'message' => 'You are registered successfully! The verification code is sent to your email.', 'token' => $token], 200);
+            return response()->json(['user' => $user, 'message' => 'You are registered successfully!', 'token' => $token], 200);
         } catch (\Exception $exception) {
             DB::rollBack();
             return response(['message' => $exception->getMessage()], 500);

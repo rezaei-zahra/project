@@ -17,16 +17,16 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string("firstName");
             $table->string("lastName");
-            $table->string("phoneNumber")->unique()->nullable();
-            $table->string("email",100)->unique()->nullable();
+            $table->string("email",100)->unique()->nullable();//نام کاربری
             $table->string("password",100);
-            $table->enum("type",\App\Models\User::TYPES)->default(\App\Models\User::TYPE_USER);
+            $table->enum("role",\App\Models\User::ROLES);
 //            $table->string('verify_code',6)->nullable();
 //            $table->timestamp('verify_at')->nullable();
+            $table->string("phoneNumber")->unique()->nullable();
             $table->string('city')->nullable();
             $table->string('specialty')->nullable();//تخصص
             $table->string('degree')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('number')->unique()->nullable();//شماره نظام پزشکی
             $table->string('address')->nullable();
             $table->string('workDay')->nullable();
             $table->string('hoursWork')->nullable();

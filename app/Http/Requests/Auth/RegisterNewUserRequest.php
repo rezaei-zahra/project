@@ -28,9 +28,11 @@ class RegisterNewUserRequest extends FormRequest
         return [
             'firstName' => 'required',
             'lastName' => 'required',
-            'phoneNumber' => 'required',
             'email' => 'required|email|unique:users',
-            'role' => 'required|in:کاربر,پزشک',
+            'role' => 'required',
+            'specialty' => 'required_if:role,doctor',
+            'phoneNumber' => 'required_if:role,doctor|unique:users',
+            'number' => 'required_if:role,doctor|unique:users',
             'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'required|min:6'
         ];

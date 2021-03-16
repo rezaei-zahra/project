@@ -13,9 +13,9 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable;
 
     //region types
-    const TYPE_USER = 'کاربر';
-    const TYPE_Doctor= 'پزشک';
-    const TYPES = [self::TYPE_USER, self::TYPE_Doctor];
+    const ROLE_USER = 'user';
+    const ROLE_Doctor= 'doctor';
+    const ROLES = [self::ROLE_USER, self::ROLE_Doctor];
     //endregion types
 
 
@@ -25,10 +25,16 @@ class User extends Authenticatable
         'firstName',
         'lastName',
         'phoneNumber',
-        'type',
+        'role',
         'email',
-        'name',
         'password',
+        'city',
+        'specialty',
+        'degree',
+        'phone',
+        'address',
+        'workDay',
+        'hoursWork',
 //        'verify_code',
 //        'verify_at',
     ];

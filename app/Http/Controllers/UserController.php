@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Type;
 
 class UserController extends Controller
 {
@@ -82,4 +83,70 @@ class UserController extends Controller
     {
         //
     }
+
+
+    public function search(Request $request)
+    {
+        try {
+
+            $name = $request->name;
+            $city = $request->city;
+            $specialty = $request->specialty;
+
+            if (!empty($name)) {
+                $search = User::where('role','doctor')
+                    ->where('firstName','like',"%{$name}%")->get();
+            }
+
+            else if (!empty($city)) {
+                $search = User::where('role','doctor')
+                    ->where('city','like',"%{$city}%")->get();
+            }
+
+            else if (!empty($specialty)) {
+                $search = User::where('role','doctor')
+                    ->where('specialty','like',"%{$specialty}%")->get();
+            }
+            return $search;
+        }
+        catch (\Exception $e) {
+            return response(['message' => 'An error has occurred'], 500);
+        }
+    }
+  public function listAllDoctor(Request $request)
+    {
+        try {
+            $name = $request->name;
+            $city = $request->ity;
+            $specialty = $request->specialty;
+
+            if (!empty($name))
+            {
+                $list = User::where(['role'=>'doctor','firstName'=>$request->name])->get();
+            }
+
+            else if (!empty($city))
+            {
+                $list = User::where(['role'=>'doctor','city'=>$request->city])->get();
+            }
+
+            else if (!empty($specialty))
+            {
+                $list = User::where(['role'=>'doctor','specialty'=>$request->specialty])->get();
+            }
+
+            else if ($name=="null" && $city=="null" && $specialty=="null")
+            {
+                dd($name);
+                $list = User::where('role','doctor')->get();
+            }
+            return $list;
+        }
+        catch (\Exception $e) {
+            return response(['message' => 'An error has occurred'], 500);
+        }
+    }
+
+
+
 }
