@@ -28,7 +28,11 @@ Route::get('/listAllDoctor', [UserController::class, 'listAllDoctor']);
 
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
+    Route::post('/visitRequest/{id}', [UserController::class, 'visitRequest']);
 
 
 
+    //روتهای مربوط به پزشک
+    Route::post('/changeInfoDoctor', [UserController::class, 'changeInfoDoctor']);
+    Route::post('/changeWorkDay', [UserController::class, 'changeWorkDay']);
 });

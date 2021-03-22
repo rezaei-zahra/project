@@ -28,8 +28,8 @@ class CreateUsersTable extends Migration
             $table->string('degree')->nullable();
             $table->string('number')->unique()->nullable();//شماره نظام پزشکی
             $table->string('address')->nullable();
-            $table->string('workDay')->nullable();
-            $table->string('hoursWork')->nullable();
+//            $table->string('workDay')->nullable();
+//            $table->string('hoursWork')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

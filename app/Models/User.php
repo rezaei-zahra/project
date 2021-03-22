@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function dayofweeks()
+    {
+        return $this->hasMany(DayOfWeek::class);
+    }
+
     public function favourites()
     {
         return $this->hasManyThrough(

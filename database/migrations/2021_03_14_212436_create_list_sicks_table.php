@@ -15,7 +15,7 @@ class CreateListSicksTable extends Migration
     {
         Schema::create('list_sicks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('visit');
+            $table->string('day');
             $table->unsignedBigInteger('user_id1');
             $table->unsignedBigInteger('user_id2');
             $table->timestamps();
