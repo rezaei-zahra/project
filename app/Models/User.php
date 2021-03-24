@@ -72,10 +72,10 @@ class User extends Authenticatable
         return $this->hasManyThrough(
             User::class,
             ListSick::class,
-            'user_id1',
+            'user_id2',
             'id',
             'id',
-            'user_id2' //
+            'user_id1' //
         );
     }
     //endregion relations

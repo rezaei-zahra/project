@@ -2,84 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\favouriteRequest;
 use App\Models\Favourite;
+use App\Models\User;
+use App\Post;
+use App\PostFavourite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FavouriteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function createFavourite(favouriteRequest $request)
     {
-        //
+        Favourite::create([
+            'user_id1' => $request->user()->id,
+            'user_id2' => $request->id,
+        ]);
+        return response(['massage'=>'با موفقیت انجام شد'],200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function deleteFavourite(Request $request)
     {
-        //
+        $conditions = [
+            'user_id1' => $request->user()->id,
+            'user_id2' => $request->id,
+        ];
+        Favourite::where($conditions)->delete();
+        return response(['massage'=>'با موفقیت انجام شد'],200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function showFavourites(Request $request)
     {
-        //
+        return $request->user()
+            ->favourites()->get();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Favourite  $favourite
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Favourite $favourite)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Favourite  $favourite
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Favourite $favourite)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Favourite  $favourite
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Favourite $favourite)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Favourite  $favourite
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Favourite $favourite)
-    {
-        //
-    }
 }

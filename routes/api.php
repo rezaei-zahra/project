@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DayOfWeekController;
+use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\ListSickController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,11 +31,16 @@ Route::get('/listAllDoctor', [UserController::class, 'listAllDoctor']);
 
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
-    Route::post('/visitRequest/{id}', [UserController::class, 'visitRequest']);
+    Route::post('/visitRequest/{id}', [ListSickController::class, 'visitRequest']);
+    Route::post('/createFavourite/{id}', [FavouriteController::class, 'createFavourite']);
+    Route::post('/deleteFavourite/{id}', [FavouriteController::class, 'deleteFavourite']);
+    Route::get('/showFavourites', [FavouriteController::class, 'showFavourites']);
+
 
 
 
     //روتهای مربوط به پزشک
     Route::post('/changeInfoDoctor', [UserController::class, 'changeInfoDoctor']);
-    Route::post('/changeWorkDay', [UserController::class, 'changeWorkDay']);
+    Route::post('/changeWorkDay', [DayOfWeekController::class, 'changeWorkDay']);
+    Route::get('/ShowListSicks', [ListSickController::class, 'ShowListSicks']);
 });

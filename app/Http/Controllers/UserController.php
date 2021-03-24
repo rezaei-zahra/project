@@ -14,83 +14,6 @@ use phpDocumentor\Reflection\Type;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
-
-
     public function search(Request $request)
     {
         try {
@@ -144,7 +67,6 @@ class UserController extends Controller
 
             else if ($name=="null" && $city=="null" && $specialty=="null")
             {
-                dd($name);
                 $list = User::where('role','doctor')->get();
             }
             return $list;
@@ -154,26 +76,6 @@ class UserController extends Controller
         }
     }
 
-    public function visitRequest(VisitRequest $request){
-        try {
-            DB::beginTransaction();
-            $user = $request->user();
-            $user2 = User::where('id',$request->id)->first();
-            if (!$user2){
-                return response(['message' => 'پزشکی یافت نشد!'],200);
-            }
-            ListSick::create([
-                'visit' => $request->day,
-                'user_id1' => $user->id,
-                'user_id2' => $user2->id,
-            ]);
-            return response(['message' => 'با موفقیت انجام شد'],200);
-        } catch (\Exception $exception) {
-            dd($exception);
-            Db::rollBack();
-            return response(['message' => 'خطایی رخ داده است'], 500);
-        }
-    }
 
     public function changeInfoDoctor(changeInfoDoctorRequest $request){
         try {
@@ -188,47 +90,11 @@ class UserController extends Controller
             DB::commit();
             return response(['message' => 'تغییرات با موفقیت انجام شد'], 200);
         } catch (\Exception $exception) {
-            dd($exception);
             Db::rollBack();
             return response(['message' => 'خطایی رخ داده است'], 500);
         }
     }
 
-    public function changeWorkDay(changeInfoDoctorRequest $request){
-        try {
-            DB::beginTransaction();
-            $user = DayOfWeek::where('user_id',auth()->user()->id)->first();
-            if (!$user){
-                $Comment = DayOfWeek::create([
-                    'user_id' => auth()->user()->id,
-                    'Saturday'=>$request->Saturday,
-                    'Sunday'=>$request->Sunday,
-                    'Monday'=>$request->Monday,
-                    'Tuesday'=>$request->Tuesday,
-                    'Wednesday'=>$request->Wednesday,
-                    'Thursday'=>$request->Thursday,
-                    'Friday'=>$request->Friday,
-                ]);
-            }
-            else{
-                $user->user_id = auth()->user()->id;
-                $user->Saturday = $request->Saturday;
-                $user->Sunday = $request->Sunday;
-                $user->Monday = $request->Monday;
-                $user->Tuesday = $request->Tuesday;
-                $user->Wednesday = $request->Wednesday;
-                $user->Thursday = $request->Thursday;
-                $user->Friday = $request->Friday;
-                $user->save();
-            }
-            DB::commit();
-            return response(['message' => 'تغییرات با موفقیت انجام شد'], 200);
-        } catch (\Exception $exception) {
-            dd($exception);
-            Db::rollBack();
-            return response(['message' => 'خطایی رخ داده است'], 500);
-        }
-    }
 
 
 
