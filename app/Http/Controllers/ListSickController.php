@@ -16,12 +16,10 @@ class ListSickController extends Controller
             DB::beginTransaction();
             $user = $request->user();
             $user2 = User::where('id',$request->id)->first();
-            if (!$user2){
-                return response(['message' => 'پزشکی یافت نشد!'],200);
-            }
+
             ListSick::create([
                 'date' => $request->date,
-                'user_id1' => $user->id,
+                'user_id' => $user->id,
                 'user_id2' => $user2->id,
             ]);
             return response(['message' => 'با موفقیت انجام شد'],200);
@@ -34,6 +32,6 @@ class ListSickController extends Controller
 
     public function ShowListSicks(ShowListSicksRequest $request){
         return $request->user()
-            ->listsicks()->get();
+            ->listsicks()->whereDate('date','>',now())->get();
     }
 }

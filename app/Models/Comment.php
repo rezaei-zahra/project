@@ -13,7 +13,7 @@ class Comment extends Model
     protected $table = 'comments';
 
     protected $fillable = [
-        'user_id1', 'user_id2', 'parent_id', 'body' ,
+        'user_id', 'user_id2', 'parent_id', 'body' ,
     ];
     //endregion model configs
 

@@ -10,5 +10,5 @@ class ListSick extends Model
     use HasFactory;
     protected $table = 'list_sicks';
 
-    protected $fillable = ['user_id1','user_id2','date'];
+    protected $fillable = ['user_id','user_id2','date'];
 }

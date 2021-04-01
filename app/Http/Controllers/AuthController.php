@@ -16,53 +16,37 @@ class AuthController extends Controller
 {
     public function login(LoginUserRequest $request)
     {
-        try {
-//            $field = $request->has('email') ? 'email' : 'phoneNumber';
-//            $value = $request->input($field);
-            $credentials = [
-//                $field => $value,
-                'email' => $request->email,
-                'password' => $request->password
-            ];
-            if (auth()->attempt($credentials)) {
-                if (auth()->user()->verify_code == null) {
-                    $token = auth()->user()->createToken('Token' . auth()->id())->accessToken;
-                    $user = Auth::user();
-                    return response()->json(['token' => $token, 'user' => $user], 200);
-                } else {
-                    return response(['message' => 'You are not a verified user yet!', 'user' => auth()->user()->userId], 400);
-                }
-            }
-        } catch (\Exception $exception) {
-            return response(['message' => $exception->getMessage()], 400);
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        if (auth()->attempt($credentials)) {
+            $token = auth()->user()->createToken('Token' . auth()->id())->accessToken;
+            $user = Auth::user();
+            return response()->json(['token' => $token, 'user' => $user], 200);
+        } else {
+            return response(['message' => 'ایمیل و رمز عبور مطابقت ندارد!'], 401);
         }
-        return response(['message' => 'Invalid Username or Password'], 401);
     }
+
+
 
     public function register(RegisterNewUserRequest $request)
     {
         try {
             DB::beginTransaction();
-            $email = $request->email;
-            if ($email) {
-                $user = User::where('email', $email)->first();
-                if ($user) {
-                    return response(['message' => 'Email or phone number already registered, please enter another one!'], 400);
-                }
-            }
-
-//            $code = random_verification_code();
             $user = User::create([
                 'firstName' => $request->firstName,
                 'lastName' => $request->lastName,
                 'phoneNumber' => $request->phoneNumber,
                 'specialty' => $request->specialty,
-                'number' => $request->number,
+                'systemNumber' => $request->systemNumber,
+                'degree' => $request->degree,
                 'role' => $request->role,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
-
 
             $token = $user->createToken('Token' . $user->id)->accessToken;
             //------------------------------ sending email ----------------------------
@@ -74,7 +58,7 @@ class AuthController extends Controller
 //            Mail::to($email)->send(new PasswordMail($details));
             //-------------------------------------------------------------------------
             DB::commit();
-            return response()->json(['user' => $user, 'message' => 'You are registered successfully!', 'token' => $token], 200);
+            return response()->json(['user' => $user, 'message' => 'ثبت نام با موفقیت انجام شد', 'token' => $token], 200);
         } catch (\Exception $exception) {
             DB::rollBack();
             return response(['message' => $exception->getMessage()], 500);

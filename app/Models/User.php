@@ -31,10 +31,9 @@ class User extends Authenticatable
         'city',
         'specialty',
         'degree',
-        'phone',
+        'systemNumber',
         'address',
-        'workDay',
-        'hoursWork',
+
 //        'verify_code',
 //        'verify_at',
     ];
@@ -50,9 +49,9 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function dayofweeks()
+    public function dayofweek()
     {
-        return $this->hasMany(DayOfWeek::class);
+        return $this->hasOne(DayOfWeek::class);
     }
 
     public function favourites()
@@ -67,16 +66,26 @@ class User extends Authenticatable
         );
     }
 
+//    public function listsicks()
+//    {
+//        return $this->hasManyThrough(
+//            User::class,
+//            ListSick::class,
+//            'user_id2',
+//            'id',
+//            'id',
+//            'user_id1' //
+//        );
+//    }
+
+
+
     public function listsicks()
     {
-        return $this->hasManyThrough(
-            User::class,
-            ListSick::class,
-            'user_id2',
-            'id',
-            'id',
-            'user_id1' //
-        );
+        return $this
+            ->belongsToMany(User::class,'list_sicks','user_id2','user_id')
+            ->withPivot('date')
+            ->withTimestamps();
     }
     //endregion relations
 

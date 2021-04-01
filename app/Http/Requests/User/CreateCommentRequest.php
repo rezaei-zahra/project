@@ -2,12 +2,9 @@
 
 namespace App\Http\Requests\User;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 
-class VisitRequest extends FormRequest
+class CreateCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,11 +13,11 @@ class VisitRequest extends FormRequest
      */
     public function authorize()
     {
-        $user = User::where('id', $this->route('id'))->first();
-//        if(!($user)){
-//            return response('پزشکی یافت نشد!');
+//        $user = auth()->user();
+//        if ($user->role == 'user'){
+//            return false;
 //        }
-        return Gate::allows('visitRequest', $user);
+        return true;
     }
 
     /**
@@ -31,7 +28,9 @@ class VisitRequest extends FormRequest
     public function rules()
     {
         return [
-            'date'=>'date_format:Y-m-d|after:now'
+            'user_id'=>'required|exists:users,id',
+            'text'=>'required|string',
+            'parent_id'=>'nullable|exists:comments,id'
         ];
     }
 }

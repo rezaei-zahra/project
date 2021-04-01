@@ -17,62 +17,90 @@ class UserController extends Controller
     public function search(Request $request)
     {
         try {
-
             $name = $request->name;
             $city = $request->city;
             $specialty = $request->specialty;
+            $degree = $request->degree;
 
             if (!empty($name)) {
-                $search = User::with('dayofweeks')->where('role','doctor')
-                    ->where('firstName','like',"%{$name}%")->get();
+                return User::with('dayofweeks')
+                    ->where('role','doctor')
+                    ->where('firstName','like',"%{$name}%")
+                    ->get();
             }
 
             else if (!empty($city)) {
-                $search = User::with('dayofweeks')->where('role','doctor')
-                    ->where('city','like',"%{$city}%")->get();
+                return User::with('dayofweeks')
+                    ->where('role','doctor')
+                    ->where('city','like',"%{$city}%")
+                    ->get();
             }
 
             else if (!empty($specialty)) {
-                $search = User::with('dayofweeks')->where('role','doctor')
-                    ->where('specialty','like',"%{$specialty}%")->get();
+                return User::with('dayofweeks')
+                    ->where('role','doctor')
+                    ->where('specialty','like',"%{$specialty}%")
+                    ->get();
             }
-            return $search;
+
+            else if (!empty($degree)) {
+                return User::with('dayofweeks')
+                    ->where('role','doctor')
+                    ->where('degree','like',"%{$degree}%")
+                    ->get();
+            }
+
         }
         catch (\Exception $e) {
-            return response(['message' => 'An error has occurred'], 500);
+            return response(['message' => 'خطایی رخ داده است.'], 500);
         }
     }
 
-    public function listAllDoctor(Request $request)
-    {
+    public function listAllDoctor(Request $request){
         try {
             $name = $request->name;
-            $city = $request->ity;
+            $city = $request->city;
             $specialty = $request->specialty;
+            $degree = $request->degree;
 
-            if (!empty($name))
+            if (empty($degree) && empty($specialty) && empty($specialty) && empty($name) && empty($city))
             {
-                $list = User::where(['role'=>'doctor','firstName'=>$request->name])->get();
+                return User::with('dayofweeks')
+                    ->where('role','doctor')
+                    ->get();
             }
 
-            else if (!empty($city))
-            {
-                $list = User::where(['role'=>'doctor','city'=>$request->city])->get();
+            else if (!empty($name)) {
+                return User::with('dayofweeks')
+                    ->where('role','doctor')
+                    ->where('firstName',$name)
+                    ->get();
             }
 
-            else if (!empty($specialty))
-            {
-                $list = User::where(['role'=>'doctor','specialty'=>$request->specialty])->get();
+            else if (!empty($city)) {
+                return User::with('dayofweeks')
+                    ->where('role','doctor')
+                    ->where('city',$city)
+                    ->get();
             }
 
-            else if ($name=="null" && $city=="null" && $specialty=="null")
-            {
-                $list = User::where('role','doctor')->get();
+            else if (!empty($specialty)) {
+                return User::with('dayofweeks')
+                    ->where('role','doctor')
+                    ->where('specialty',$specialty)
+                    ->get();
             }
-            return $list;
+
+            else if (!empty($degree)) {
+               return User::with('dayofweeks')
+                    ->where('role','doctor')
+                    ->where('degree',$degree)
+                    ->get();
+            }
+
         }
         catch (\Exception $e) {
-            return response(['message' => 'An error has occurred'], 500);
+            return response(['message' => 'خطایی رخ داده است.'], 500);
         }
     }
 
@@ -84,6 +112,24 @@ class UserController extends Controller
 
             $user->city = $request->city;
             $user->address = $request->address;
+            $user->phoneNumber = $request->phoneNumber;
+
+            $user->save();
+            DB::commit();
+            return response(['message' => 'تغییرات با موفقیت انجام شد'], 200);
+        } catch (\Exception $exception) {
+            Db::rollBack();
+            return response(['message' => 'خطایی رخ داده است'], 500);
+        }
+    }
+
+    public function changeInfoSick(Request $request){
+        try {
+            DB::beginTransaction();
+            $user = auth()->user();
+
+            $user->firstName = $request->firstName;
+            $user->lastName = $request->lastName;
             $user->phoneNumber = $request->phoneNumber;
 
             $user->save();

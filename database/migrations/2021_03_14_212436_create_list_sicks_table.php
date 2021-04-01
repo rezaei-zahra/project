@@ -16,11 +16,11 @@ class CreateListSicksTable extends Migration
         Schema::create('list_sicks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('date');
-            $table->unsignedBigInteger('user_id1');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('user_id2');
             $table->timestamps();
 
-            $table->foreign('user_id1')
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade')

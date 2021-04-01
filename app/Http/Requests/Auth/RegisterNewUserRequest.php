@@ -30,9 +30,10 @@ class RegisterNewUserRequest extends FormRequest
             'lastName' => 'required',
             'email' => 'required|email|unique:users',
             'role' => 'required',
+            'phoneNumber' => 'required|unique:users',
             'specialty' => 'required_if:role,doctor',
-            'phoneNumber' => 'required_if:role,doctor|unique:users',
-            'number' => 'required_if:role,doctor|unique:users',
+            'systemNumber' => 'required_if:role,doctor|unique:users',
+            'degree' => 'required_if:role,doctor',
             'password' => 'required|min:6|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'required|min:6'
         ];

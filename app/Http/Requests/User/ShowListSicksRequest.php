@@ -15,7 +15,7 @@ class ShowListSicksRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('seeListSicks',User::class);//یوزر آیا میتونه فالورهای این کاربر خاص رو ببینه
+        return Gate::allows('seeListSicks',User::class);
     }
 
     /**

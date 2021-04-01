@@ -30,7 +30,7 @@ class UserPolicy
             ];
             return Favourite::where($conditions)->count() == 0;//countیعنی اگر تونست این را پیدا کند یعنی من ققبلا جزو علاقه مندیها قرار دادم
         }
-       //یعنی شما قبلا این پزشک را جزو علاقه مندیها قرار دادین
+
         return false;
     }
 
